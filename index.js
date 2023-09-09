@@ -7,17 +7,17 @@ const server = http.createServer((req, res) => {
 
 
     const currentDate = new Date();
-    const dayName = currentDate.toDateString();
+    const dayName = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(currentDate)
 
     const responseData = {
         slack_name,
-        current_day: "Saturday", //Change this
-        utc_time: currentDate.toISOString(),
+        current_day: dayName,
+        utc_time: currentDate.toISOString().split('.')[0] + 'Z',
         track,
+        github_file_url: "https://github.com/fortune710/hng-task-1/blob/main/index.js",
+        github_repo_url: "https://github.com/fortune710/hng-task-1",
         status: 200
     }
-
-    console.log(req.method, req.url)
 
 
     res.writeHead(200, { "Content-Type": "application/json" })
